@@ -1,0 +1,25 @@
+version: '3.3'
+services:
+  db-postgres:
+    container_name: db_postgres
+    image: postgres
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: selback2486
+      POSTGRES_DB: postgres
+  booking-app:
+    stdin_open: true
+    tty: true
+    container_name: profile_app
+    image: profile-app
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db-postgres
+    network_mode: "host"
